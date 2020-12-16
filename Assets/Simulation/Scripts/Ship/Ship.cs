@@ -26,6 +26,7 @@ namespace FLFlight
 
         private void Update()
         {
+            /////////
             // Pass the input to the physics to move the ship.
             Physics.SetPhysicsInput(new Vector3(Input.Strafe, 0.0f, Input.Throttle), new Vector3(Input.Pitch, Input.Yaw, Input.Roll));
 
