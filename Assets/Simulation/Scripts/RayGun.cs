@@ -34,10 +34,11 @@ public class RayGun : MonoBehaviour
 
     void shootRay()
     {
+        //var ray = Instantiate(m_shotPrefab, transform.position, transform.rotation);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, range))
+        if (Physics.Raycast(this.transform.forward, this.transform.forward, out hit))
         {
-            GameObject laser = GameObject.Instantiate(m_shotPrefab, transform.position, transform.rotation) as GameObject;
+            GameObject laser = GameObject.Instantiate(m_shotPrefab, this.transform.position, this.transform.rotation) as GameObject;
             laser.GetComponent<ShotBehavior>().setTarget(hit.point);
             GameObject.Destroy(laser, 2f);
 
