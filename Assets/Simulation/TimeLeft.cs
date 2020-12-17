@@ -19,6 +19,9 @@ public class TimeLeft : MonoBehaviour
         if(takingAway == false && secondsLeft > 0)
         {
             StartCoroutine(TimerTake());
+        } else if (secondsLeft == 0){
+            Time.timeScale = 0;
+            textDisplay.GetComponent<Text>().text = "GAME OVER";
         }
     }
 
