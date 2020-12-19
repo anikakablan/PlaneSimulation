@@ -56,7 +56,7 @@ namespace FLFlight
 
         private void RotateRigAndCameraForLookahead()
         {
-
+            //instantiation
             var mousePos = Input.mousePosition;
 
             var mouseScreenX = (mousePos.x - (Screen.width * 0.5f)) / (Screen.width * 0.5f);
