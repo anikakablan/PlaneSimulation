@@ -2,9 +2,7 @@
 
 namespace FLFlight
 {
-    /// <summary>
-    /// Class specifically to deal with input.
-    /// </summary>
+    
     public class ShipInput : MonoBehaviour
     {
         [Tooltip("How far the ship will bank when turning.")]
@@ -61,30 +59,9 @@ namespace FLFlight
             BankShipRelativeToUpVector(mousePos, Camera.main.transform.up);
         }
 
-        /// <summary>
-        /// Ship will roll relative to the given up vector, modified by the mouse position.
-        /// E.g. If the mouse is centered, the ship's up will match the up vector. If the mouse
-        /// is at the right extreme of the screen, it will bank right bankLimit degrees relative
-        /// to the given up vector.
-        /// </summary>
-        /// <param name="mousePos"></param>
-        /// <param name="upVector"></param>
         private void BankShipRelativeToUpVector(Vector3 mousePos, Vector3 upVector)
         {
-            // A PID Controller is HIGHLY recommended to get the most out of this.
-            // The "sensitivity" values are poor substitutes for them, but they work well enough for
-            // the sake of a demo. A tuned PID controller on the other hand will give extremely
-            // accurate and responsive ship flight.
-            // See https://en.wikipedia.org/wiki/PID_controller
-            // And https://forum.unity.com/threads/pid-controller.68390/
-            // Video showing the difference it makes: https://www.youtube.com/watch?v=ErPgBHwWffE
-
-            // The ship is meant to bank left/right based on how much the mouse cursor is to the left
-            // or right of the screen. E.g. Mouse at left edge of screen means the ship should try to
-            // bank counterclockwise by bankLimit degrees. 
-
-            // Figure out most position relative to center of screen.
-            // 0 is center, 1 is right, -1 is left.
+          
             float bankInfluence = (mousePos.x - (Screen.width * 0.5f)) / (Screen.width * 0.5f);
             bankInfluence = Mathf.Clamp(bankInfluence, -1f, 1f);
 
@@ -92,8 +69,7 @@ namespace FLFlight
             bankInfluence *= throttle;
             float bankTarget = bankInfluence * bankLimit;
 
-            // Here's the special sauce. Roll so that the bank target is reached relative to the
-            // up of the camera.
+          
             float bankError = Vector3.SignedAngle(transform.up, upVector, transform.forward);
             bankError = bankError - bankTarget;
 
@@ -104,22 +80,15 @@ namespace FLFlight
             roll = bankError * rollSensitivity;
         }
 
-        /// <summary>
-        /// Pitches and yaws the ship to look at the passed in world position.
-        /// </summary>
-        /// <param name="gotoPos">World position to turn the ship towards.</param>
         private void TurnTowardsPoint(Vector3 gotoPos)
         {
             Vector3 localGotoPos = transform.InverseTransformVector(gotoPos - transform.position).normalized;
 
-            // Note that you would want to use a PID controller for this to make it more responsive.
+            
             pitch = Mathf.Clamp(-localGotoPos.y * pitchSensitivity, -1f, 1f);
             yaw = Mathf.Clamp(localGotoPos.x * yawSensitivity, -1f, 1f);
         }
 
-        /// <summary>
-        /// Uses R and F to raise and lower the throttle.
-        /// </summary>
         private void UpdateKeyboardThrottle(KeyCode increaseKey, KeyCode decreaseKey)
         {
             float target = throttle;
@@ -132,9 +101,8 @@ namespace FLFlight
             throttle = Mathf.MoveTowards(throttle, target, Time.deltaTime * THROTTLE_SPEED);
         }
 
-        /// <summary>
         /// Uses the mouse wheel to control the throttle.
-        /// </summary>
+       
         private void UpdateMouseWheelThrottle()
         {
             throttle += Input.GetAxis("Mouse ScrollWheel");

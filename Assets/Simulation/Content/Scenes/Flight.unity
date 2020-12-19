@@ -425,6 +425,11 @@ PrefabInstance:
       propertyPath: forceMultiplier
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 114449331134152560, guid: 118efdd877e08f94db8b8ba4780bf098,
+        type: 3}
+      propertyPath: throttle
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 795907573348315122, guid: 118efdd877e08f94db8b8ba4780bf098,
         type: 3}
       propertyPath: m_LocalScale.x

@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class BoidMovement : MonoBehaviour
 {
-    // Reference to the controller.
+   
     public BoidController controller;
 
-    // Options for animation playback.
     public float animationSpeedVariation = 0.2f;
 
-    // Random seed.
     float noiseOffset;
 
     // Caluculates the separation vector with a target.
@@ -36,7 +34,7 @@ public class BoidMovement : MonoBehaviour
         var currentPosition = transform.position;
         var currentRotation = transform.rotation;
 
-        // Current velocity randomized with noise.
+        // Current velocity 
         var noise = Mathf.PerlinNoise(Time.time, noiseOffset) * 2.0f - 1.0f;
         var velocity = controller.velocity * (1.0f + noise * controller.velocityVariation);
 
@@ -45,10 +43,10 @@ public class BoidMovement : MonoBehaviour
         var alignment = controller.transform.forward;
         var cohesion = controller.transform.position;
 
-        // Looks up nearby boids.
+        // Looks up nearby objects.
         var nearbyBoids = Physics.OverlapSphere(currentPosition, controller.neighborDist, controller.searchLayer);
 
-        // Accumulates the vectors.
+        // Accumulates the objects.
         foreach (var boid in nearbyBoids)
         {
             if (boid.gameObject == gameObject) continue;
@@ -67,7 +65,7 @@ public class BoidMovement : MonoBehaviour
         var direction = separation + alignment + cohesion;
         var rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
 
-        // Applys the rotation with interpolation.
+      
         if (rotation != currentRotation)
         {
             var ip = Mathf.Exp(-controller.rotationCoeff * Time.deltaTime);
